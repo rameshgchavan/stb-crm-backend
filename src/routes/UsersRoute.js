@@ -17,8 +17,18 @@ UsersRoutes.route("/login").post(async (req, res) => {
 })
 
 UsersRoutes.route("/signup").post(async (req, res) => {
-    res.send(await UsersModel(req.body).save());
+    const user = await UsersModel.findOne({ Email: req.body.Email });
+
+    user ? res.send({
+        code: 409,
+        message: `${user.Email} is a duplicate record.`
+    })
+        : await UsersModel(req.body).save()
+            .then(res.send({
+                code: 201,
+                message: `Created successfully.`
+            }));
 })
 
 // Export Router
-module.exports= UsersRoutes;
+module.exports = UsersRoutes;
