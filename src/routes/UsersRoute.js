@@ -16,5 +16,9 @@ UsersRoutes.route("/login").post(async (req, res) => {
     res.send(await UsersModel.findOne(req.body).select('-Password -_id'));
 })
 
+UsersRoutes.route("/signup").post(async (req, res) => {
+    res.send(await UsersModel(req.body).save());
+})
+
 // Export Router
 module.exports= UsersRoutes;
