@@ -16,18 +16,25 @@ UsersRoutes.route("/login").post(async (req, res) => {
     res.send(await UsersModel.findOne(req.body).select('-Password -_id'));
 })
 
-UsersRoutes.route("/signup").post(async (req, res) => {
+UsersRoutes.route("/isemail").post(async (req, res) => {
     const user = await UsersModel.findOne({ Email: req.body.Email });
 
     user ? res.send({
         code: 409,
         message: `${user.Email} is a duplicate record.`
     })
-        : await UsersModel(req.body).save()
-            .then(res.send({
-                code: 201,
-                message: `Created successfully.`
-            }));
+        : res.send({
+            code: 200,
+            message: `Ok.`
+        });
+})
+
+UsersRoutes.route("/signup").post(async (req, res) => {
+    await UsersModel(req.body).save()
+        .then(res.send({
+            code: 201,
+            message: `Created successfully.`
+        }));
 })
 
 // Export Router
