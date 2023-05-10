@@ -39,12 +39,12 @@ UsersRoutes.route("/isemail").post(async (req, res) => {
     const user = await UsersModel.findOne({ Email: req.body.Email }).select('-Password -_id');
 
     user ? res.send({
-        code: 409,
-        message: `${user.Email} is a duplicate record.`
+        code: 200,
+        message: `${user.Email} is found.`
     })
         : res.send({
-            code: 200,
-            message: `Ok.`
+            code: 404,
+            message: `${req.body.Email} not found.`
         });
 })
 
@@ -53,6 +53,14 @@ UsersRoutes.route("/signup").post(async (req, res) => {
         .then(res.send({
             code: 201,
             message: `Created successfully.`
+        }));
+})
+
+UsersRoutes.route("/resetpass").put(async (req, res) => {
+    await UsersModel.findOneAndUpdate({ Email: req.body.Email }, { Password: req.body.Password })
+        .then(res.send({
+            code: 202,
+            message: `Accepted successfully.`
         }));
 })
 
