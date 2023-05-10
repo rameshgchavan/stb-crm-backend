@@ -13,11 +13,30 @@ UsersRoutes.route("/").get(async (req, res) => {
 })
 
 UsersRoutes.route("/login").post(async (req, res) => {
-    res.send(await UsersModel.findOne(req.body).select('-Password -_id'));
+    const user = await UsersModel.findOne({ Email: req.body.Email }).select('Password');
+
+    if (!user) {
+        res.send({
+            code: 404,
+            message: `${req.body.Email} is not found.`
+        })
+
+        return
+    }
+
+    if (user.Password !== req.body.Password) {
+        res.send({
+            code: 403,
+            message: `Forbidden.`
+        })
+
+        return
+    }
+    else { res.send(await UsersModel.findOne(req.body).select('-Password -_id')); }
 })
 
 UsersRoutes.route("/isemail").post(async (req, res) => {
-    const user = await UsersModel.findOne({ Email: req.body.Email });
+    const user = await UsersModel.findOne({ Email: req.body.Email }).select('-Password -_id');
 
     user ? res.send({
         code: 409,
