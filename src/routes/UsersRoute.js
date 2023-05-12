@@ -8,11 +8,16 @@ const UsersModel = require("../models/UsersModel")
 const UsersRoutes = express.Router();
 
 // (APIs) downwards
+// HTTP request get method to get users
+UsersRoutes.route("/").get(async (req, res) => {
+    res.send(await UsersModel.find().select("-Password"));
+})
+
 // HTTP request post method to login
 UsersRoutes.route("/login").post(async (req, res) => {
     // Find Email and return password only
     const user = await UsersModel.findOne({ Email: req.body.Email }).select('Password');
-   
+
     // Check if not Email exsist then retun 404 response code with message
     if (!user) {
         res.send({
