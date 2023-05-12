@@ -53,8 +53,11 @@
   - app.use(cors())
   - app.use(express.json())
   - app.use("/users", UsersRoutes)
-- Run frontend
+- To run frontend
   - app.use(express.static('./client/build'))
+
+### To check server on local machine
+- Type "nodemon server" in command prompt and hit enter 
 
 
 
