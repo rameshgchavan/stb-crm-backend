@@ -1,7 +1,7 @@
 // Import express and middlewares
 const express = require("express");
 const mongoose = require("mongoose");
-const environment = require("dotenv");
+const dotEnv = require("dotenv");
 // const cors = require("cors");
 
 // Import Routes
@@ -11,7 +11,7 @@ const UsersRoutes = require("./src/routes/UsersRoute")
 const app = express();
 
 // Environment setting
-environment.config();
+dotEnv.config();
 const PORT = process.env.PORT;
 const connectionString = process.env.MONGODB_URL
 
