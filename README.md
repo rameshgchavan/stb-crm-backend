@@ -17,7 +17,7 @@
 ![image](https://github.com/rameshgchavan/stb-crm-backend/assets/109573381/e220e09e-fa51-4cef-b499-97a23906357c)
 
 ##
-### Steps to set sever >>>
+### Steps to set server >>>
 ##
 
 ### Setting environment keys (.env)
@@ -26,18 +26,29 @@
 ### Ignore (.ignore)
 - .env and /node_modules
 
-### Create Models (/models/(e.g. UsersModel.js))
+### Create Schema Models (/models/(e.g. UsersModel.js))
 - Import mongoose >> Create schema >> export mongoose model as module
+
+### Create TokenVerification Model in models/secutiy folder
+- Import jsonwebtoken, dotenv
+- Configure and cet environment keies
+- Create fuction TokenVerification to verify token
 
 ### Routes (/Routes/(e.g. UsersRoute.js))
 - Import express and models (e.g. UsersModel)
 - Create express.Router object (e.g. UsersRoutes)
 - Create route http request as
-  - route("/login").post
+  - route("/").post
+    - Use TokenVerification fuction in this route
   - route("/isemail").post
   - route("/signup").post
+  - route("/login").post
   - route("/resetpass").put 
 - Export router (e.g. UsersRoutes) as module
+
+### Create Scrutiny Model in models/secutiy folder
+- Import UsersModel schema
+- Create fuction Scrutiny to scrutinize user by email, password and approval
 
 ### Setting Server (server.js)
 - Import dependancies/middlewares
