@@ -13,7 +13,7 @@ const app = express();
 // Environment setting
 dotEnv.config();
 const PORT = process.env.PORT;
-const connectionString = process.env.MONGODB_URL
+const connectionString = process.env.MONGODB_URL;
 
 // Connect to database and listen to port
 mongoose.connect(
