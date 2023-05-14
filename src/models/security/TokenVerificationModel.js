@@ -9,9 +9,9 @@ const JWTKEY = process.env.JWTKEY;
 const TokenVerification = async (req, res, next) => {
     // Get token received in header from client
     let token = req.headers["authorization"];
-    // If token exsist
+    // If token exist
     if (token) {
-        // Split token from bearer
+        // Split token from "bearer" text
         token = token.split(" ")[1];
         // Verify token with JWTKEY
         jwt.verify(token, JWTKEY, (err) => {

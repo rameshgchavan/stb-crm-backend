@@ -3,8 +3,9 @@ const express = require("express");
 const dotEnv = require("dotenv");
 const jwt = require("jsonwebtoken");
 
-// Import Scrutiny function Model
+// Import Scrutiny Model
 const Scrutiny = require("../models/security/ScrutinyModel");
+// Import TokenVerification Model
 const TokenVerification = require("../models/security/TokenVerificationModel");
 
 // Import Users Schema Model
@@ -31,7 +32,7 @@ UsersRoutes.route("/").post(TokenVerification, async (req, res) => {
 
 // HTTP request post method to check email exsists or not
 UsersRoutes.route("/isemail").post(async (req, res) => {
-    // Scrutiny Email
+    // Scrutinize Email
     const scrutiny = await Scrutiny(req.body);
     // If not email exsist
     if (scrutiny.code == 404) {
@@ -47,7 +48,7 @@ UsersRoutes.route("/isemail").post(async (req, res) => {
 
 // HTTP request post method to signup
 UsersRoutes.route("/signup").post(async (req, res) => {
-    // Scrutiny Email
+    // Scrutinize Email
     const scrutiny = await Scrutiny(req.body);
 
     if (scrutiny.code == 404) {
@@ -62,7 +63,7 @@ UsersRoutes.route("/signup").post(async (req, res) => {
 
 // HTTP request post method to login
 UsersRoutes.route("/login").post(async (req, res) => {
-    // Scrutiny Email and password
+    // Scrutinize Email and password
     const scrutiny = await Scrutiny(req.body);
 
     if (scrutiny.code == 200) {
@@ -81,7 +82,7 @@ UsersRoutes.route("/login").post(async (req, res) => {
 
 // HTTP request put method to reset password
 UsersRoutes.route("/resetpass").put(async (req, res) => {
-    // Scrutiny Email
+    // Scrutinize Email
     const scrutiny = await Scrutiny(req.body);
     //Change password if old password matched or not matched
     if (scrutiny.code == 200 || scrutiny.code == 403) {
