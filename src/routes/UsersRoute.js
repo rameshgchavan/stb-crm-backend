@@ -25,7 +25,7 @@ UsersRoutes.route("/").post(TokenVerification, async (req, res) => {
     const { Admin } = req.body;
 
     if (Admin) {
-        res.send(await UsersModel.find().select("Approved Name AreaManager"));
+        res.send(await UsersModel.find({ Admin: false }).select("Status Approved Name AreaManager"));
     }
     else { res.send({ code: 401, message: "Unauthorized" }); }
 })

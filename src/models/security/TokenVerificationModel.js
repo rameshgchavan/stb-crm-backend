@@ -13,6 +13,7 @@ const TokenVerification = async (req, res, next) => {
     if (token) {
         // Split token from "bearer" text
         token = token.split(" ")[1];
+        
         // Verify token with JWTKEY
         jwt.verify(token, JWTKEY, (err) => {
             // If error occurred
