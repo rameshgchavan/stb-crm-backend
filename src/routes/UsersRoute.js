@@ -30,6 +30,23 @@ UsersRoutes.route("/").post(TokenVerification, async (req, res) => {
     else { res.send({ code: 401, message: "Unauthorized" }); }
 })
 
+// HTTP request put method to update users
+UsersRoutes.route("/update").put(TokenVerification, async (req, res) => {
+    // Destruct request body
+    const { id, object } = req.body;
+    // Restrict to update Name or Status only
+    const key = Object.keys(object)[0];
+    if (key == "Name" || key == "Status") {
+        // Find by id and update obeject of document in collection
+        console.log(Object.keys(object)[0])
+        await UsersModel.findOneAndUpdate({ _id: id }, object)
+            .then(res.send({
+                code: 202,
+                message: `Accepted successfully.`
+            }));
+    }
+})
+
 // HTTP request post method to check email exsists or not
 UsersRoutes.route("/isemail").post(async (req, res) => {
     // Scrutinize Email

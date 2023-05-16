@@ -8,6 +8,7 @@ const UsersSchema = new mongoose.Schema({
     Password: String,
     Admin: Boolean,
     Approved: Boolean,
+    Status: String,
     AreaManager: String,
     LastLogin: String
 });
@@ -15,6 +16,6 @@ const UsersSchema = new mongoose.Schema({
 // Export Model
 module.exports = mongoose.model("Users", UsersSchema); // "Users" is collections name
 
-// Note: mongoose model convert the collection name to lower case and 
+// Note: mongoose model convert the collection name to lower case and
 // if the collection name is singular it convert to plural.
 // e.g User >> users
