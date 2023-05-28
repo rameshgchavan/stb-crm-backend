@@ -38,7 +38,6 @@ UsersRoutes.route("/update").put(TokenVerification, async (req, res) => {
     const key = Object.keys(object)[0];
     if (key == "Name" || key == "Status") {
         // Find by id and update obeject of document in collection
-        console.log(Object.keys(object)[0])
         await UsersModel.findOneAndUpdate({ _id: id }, object)
             .then(res.send({
                 code: 202,

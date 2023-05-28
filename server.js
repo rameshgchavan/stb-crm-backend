@@ -5,7 +5,8 @@ const dotEnv = require("dotenv");
 // const cors = require("cors");
 
 // Import Routes
-const UsersRoutes = require("./src/routes/UsersRoute")
+const UsersRoutes = require("./src/routes/UsersRoute");
+const CustomersRoutes = require("./src/routes/CustomersRoute");
 
 // Create object of express
 const app = express();
@@ -36,6 +37,7 @@ mongoose.connect(
 // app.use(cors());
 app.use(express.json());
 app.use("/users", UsersRoutes);
+app.use("/customers", CustomersRoutes);
 
 //Run frontend
 app.use(express.static('./client/build')); //Note: Copy build folder of frontend and paste it into backend
