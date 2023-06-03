@@ -109,7 +109,7 @@ UsersRoutes.route("/resetpass").put(async (req, res) => {
                 message: `Accepted successfully.`
             }));
     }
-})
+});
 
 // Export Router
 module.exports = UsersRoutes;
