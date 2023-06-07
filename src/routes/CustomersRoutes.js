@@ -13,7 +13,7 @@ const CustomersModel = require("../models/CustomersModel")
 const CustomersRoutes = express.Router();
 
 // (APIs) downwards
-// HTTP request post method to get customers
+// HTTP request get method to get customers
 CustomersRoutes.route("/").get(TokenVerification, async (req, res) => {
     res.send(await CustomersModel.find());
 })
