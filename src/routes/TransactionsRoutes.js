@@ -14,13 +14,15 @@ const TransactionsRoutes = express.Router();
 
 // (APIs) downwards
 // HTTP request get method to get transactions
-TransactionsRoutes.route("/:collectionName").get(TokenVerification, async (req, res) => {
+TransactionsRoutes.route("/:collectionName").post(TokenVerification, async (req, res) => {
     const { collectionName } = req.params;
 
     const TransactionsModel = mongoose.models[collectionName]
         || mongoose.model(collectionName, TransactionsSchema)
 
-    res.send(await TransactionsModel.find());
+    req.body.acNo
+        ? res.send(await TransactionsModel.find({ AcNo: req.body.acNo }))
+        : res.send(await TransactionsModel.find())
 })
 
 // Export Router
