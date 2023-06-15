@@ -21,11 +21,18 @@ const Scrutiny = async (reqBody) => {
             message: "Forbidden password"
         }
     }
-    // Check if user approved or not
-    if (isEmail.Status!="approved") {
+    // Check if user approval pening
+    if (isEmail.Status == "pending") {
         return {
             code: 102, //Processing
             message: "Approval pending."
+        }
+    }
+    // Check if user blocked
+    if (isEmail.Status == "blocked") {
+        return {
+            code: 401, //Unauthorized
+            message: "Blocked."
         }
     }
     //Successful scrutiny
