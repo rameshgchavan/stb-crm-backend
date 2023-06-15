@@ -22,7 +22,7 @@ const Scrutiny = async (reqBody) => {
         }
     }
     // Check if user approved or not
-    if (!isEmail.Approved) {
+    if (isEmail.Status!="approved") {
         return {
             code: 102, //Processing
             message: "Approval pending."

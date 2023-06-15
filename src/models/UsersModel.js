@@ -1,20 +1,22 @@
 // Import mongoose
 const mongoose = require("mongoose");
 
+const mongoDBConnection = require("../MongoDBConnection");
+const connection = mongoDBConnection.useDb("stb-crm", { useCache: true });
+
+
 // Create Schema
 const UsersSchema = new mongoose.Schema({
     Name: String,
     Email: String,
     Password: String,
-    Admin: Boolean,
-    Approved: Boolean,
+    Admin: String,
     Status: String,
-    AreaManager: String,
     LastLogin: String
 });
 
 // Export Model
-module.exports = mongoose.model("Users", UsersSchema); // "Users" is collections name
+module.exports = connection.model("Users", UsersSchema); // "Users" is collections name
 
 // Note: mongoose model convert the collection name to lower case and
 // if the collection name is singular it convert to plural.

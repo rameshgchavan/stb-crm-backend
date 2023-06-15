@@ -22,10 +22,13 @@ const UsersRoutes = express.Router();
 // HTTP request post method to get users
 UsersRoutes.route("/").post(TokenVerification, async (req, res) => {
     // Destruct request body
-    const { Admin } = req.body;
+    const { Admin, Email } = req.body.user;
 
-    if (Admin) {
-        res.send(await UsersModel.find({ Admin: false }).select("Status Approved Name AreaManager"));
+    if (Admin == "stb-crm") {
+        res.send(await UsersModel.find({ Admin: "self" }).select("Status Approved Name AreaManager"));
+    }
+    else if (Admin == "self") {
+        res.send(await UsersModel.find({ Admin: Email.replace(".", "-") }).select("Status Approved Name AreaManager"));
     }
     else { res.send({ code: 401, message: "Unauthorized" }); }
 })

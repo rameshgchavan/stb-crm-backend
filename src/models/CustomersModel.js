@@ -1,6 +1,9 @@
 // Import mongoose
 const mongoose = require("mongoose");
 
+const mongoDBConnection = require("../MongoDBConnection");
+const connection = mongoDBConnection.useDb("stb-crm", { useCache: true });
+
 // Create Schema
 const CustomersSchema = new mongoose.Schema({
     AcNo: String,
@@ -25,8 +28,9 @@ const CustomersSchema = new mongoose.Schema({
     VC_NDS_MAC_ID: String
 });
 
-// Export Model
-module.exports = mongoose.model("Customers-details", CustomersSchema); // Customers-details is collections name
+// Export schema
+module.exports = CustomersSchema;
+ // Customers-details is collections name
 
 // Note: mongoose model convert the collection name to lower case and
 // if the collection name is singular it convert to plural.
