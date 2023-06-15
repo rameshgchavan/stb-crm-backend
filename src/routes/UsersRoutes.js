@@ -25,10 +25,10 @@ UsersRoutes.route("/").post(TokenVerification, async (req, res) => {
     const { Admin, Email } = req.body.user;
 
     if (Admin == "stb-crm") {
-        res.send(await UsersModel.find({ Admin: "self" }).select("Status Approved Name AreaManager"));
+        res.send(await UsersModel.find().select("Admin Status Name"));
     }
     else if (Admin == "self") {
-        res.send(await UsersModel.find({ Admin: Email.replace(".", "-") }).select("Status Approved Name AreaManager"));
+        res.send(await UsersModel.find({ Admin: Email.replace(".", "-") }).select("Admin Status Name"));
     }
     else { res.send({ code: 401, message: "Unauthorized" }); }
 })
