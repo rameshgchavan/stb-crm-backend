@@ -4,8 +4,7 @@
   "description": "",
   "main": "sever.js",
   "engines": {
-    "node": "v16.15.0",
-    "npm": "8.5.5"
+    "node": "v18.16.0", "npm": "9.5.1"
   },
   "scripts": {
     "start": "node sever.js",
