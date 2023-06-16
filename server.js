@@ -15,7 +15,7 @@ const PORT = process.env.PORT;
 // Create object of express
 const app = express();
 
-app.listen(PORT, () => {
+app.listen(PORT || 5000, () => {
     try {
         console.log("Connection established. Server is running on Port: " + PORT);
     }
