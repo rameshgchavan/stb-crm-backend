@@ -11,7 +11,7 @@ const CustomersSchema = new mongoose.Schema({
     Area: String,
     AreaManager: String,
     AreaPerson: String,
-    CustDate: String,
+    CustDate: Date,
     CustName: String,
     LCOCode: String,
     MobNo: String,
