@@ -77,21 +77,21 @@ CustomersRoutes.route("/update/:id").put(TokenVerification, async (req, res) => 
         // Delete document which id is equal to param id 
         // and then send respose
 
-        await CustomersModel.deleteOne({ _id: paramId })
-            .then(
-                await CustomersModel(bodyData).save()
-                    .then(() =>
-                        res.send({
-                            code: 202,
-                            message: `${action} successfully.`
-                        })
-                    )
-                    .catch((err) =>
-                        res.send({
-                            code: 302, //Found
-                            message: err
-                        })
-                    )
+        await CustomersModel(bodyData).save()
+            .then(async () => {
+                await CustomersModel.deleteOne({ _id: paramId });
+
+                res.send({
+                    code: 202,
+                    message: `${action} successfully.`
+                });
+            }
+            )
+            .catch((err) =>
+                res.send({
+                    code: 302, //Found
+                    message: err
+                })
             );
     };
 
