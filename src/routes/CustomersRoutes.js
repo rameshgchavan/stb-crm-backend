@@ -80,10 +80,16 @@ CustomersRoutes.route("/update/:id").put(TokenVerification, async (req, res) => 
         await CustomersModel.deleteOne({ _id: paramId })
             .then(
                 await CustomersModel(bodyData).save()
-                    .then(
+                    .then(() =>
                         res.send({
                             code: 202,
                             message: `${action} successfully.`
+                        })
+                    )
+                    .catch((err) =>
+                        res.send({
+                            code: 302, //Found
+                            message: err
                         })
                     )
             );
