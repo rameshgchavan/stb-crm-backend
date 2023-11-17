@@ -25,7 +25,7 @@ UsersRoutes.route("/").post(TokenVerification, async (req, res) => {
     const { Admin, Email } = req.body.user;
 
     if (Admin == "stb-crm") {
-        res.send(await UsersModel.find().select("Admin Status Name"));
+        res.send(await UsersModel.find().select("Admin Status Name LastLogin"));
     }
     else if (Admin == "self") {
         res.send(await UsersModel.find({ Admin: Email.replace(".", "-") }).select("Admin Status Name"));
@@ -37,10 +37,10 @@ UsersRoutes.route("/").post(TokenVerification, async (req, res) => {
 UsersRoutes.route("/update").put(TokenVerification, async (req, res) => {
     // Destruct request body
     const { id, object } = req.body;
-    // Restrict to update Name or Status only
+    // Restrict to update Name or Status or LastLogin only
     const key = Object.keys(object)[0];
-    if (key == "Name" || key == "Status") {
-        // Find by id and update obeject of document in collection
+    if (key == "Name" || key == "Status" || key == "LastLogin") {
+        // Find by id and update object of document in collection
         await UsersModel.findOneAndUpdate({ _id: id }, object)
             .then(res.send({
                 code: 202,
@@ -87,7 +87,7 @@ UsersRoutes.route("/login").post(async (req, res) => {
 
     if (scrutiny.code == 200) {
         // Find autheticated user 
-        const user = await UsersModel.findOne(req.body).select('-Password -_id');
+        const user = await UsersModel.findOne(req.body).select('-Password');
         // Create token to secure routes and send it into response
         jwt.sign({}, JWTKEY, { expiresIn: "1h" }, (err, token) => {
             if (err) { res.send(err) }
