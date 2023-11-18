@@ -6,6 +6,7 @@ const connection = mongoDBConnection.useDb("stb-crm", { useCache: true });
 
 // Create Schema
 const CustomersSchema = new mongoose.Schema({
+    IsFree: Boolean,
     AcNo: String,
     Address: String,
     Area: String,
@@ -30,7 +31,7 @@ const CustomersSchema = new mongoose.Schema({
 
 // Export schema
 module.exports = CustomersSchema;
- // Customers-details is collections name
+// Customers-details is collections name
 
 // Note: mongoose model convert the collection name to lower case and
 // if the collection name is singular it convert to plural.
