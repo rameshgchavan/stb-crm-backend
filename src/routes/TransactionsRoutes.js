@@ -39,7 +39,7 @@ TransactionsRoutes.route("/rcstbcount").post(TokenVerification, async (req, res)
         "Sep", "Oct", "Nov", "Dec"
     ];
 
-    let rcSTBCount = [];
+    let rcSTBsAcNo = [];
 
     const { dbName, ofYear } = req.body;
 
@@ -49,7 +49,7 @@ TransactionsRoutes.route("/rcstbcount").post(TokenVerification, async (req, res)
         const TransactionsModel = connection.models[`${monthsList[i]}-${ofYear}`]
             || connection.model(`${monthsList[i]}-${ofYear}`, TransactionsSchema);
 
-        rcSTBCount.push(await TransactionsModel.count({
+        rcSTBsAcNo.push(await TransactionsModel.find({
             $and: [
                 {
                     $or: [
@@ -59,11 +59,11 @@ TransactionsRoutes.route("/rcstbcount").post(TokenVerification, async (req, res)
                 },
                 { TransactionType: { $ne: "Cancellation" } }
             ]
-        })
+        }).select("AcNo -_id")
         )
     }
 
-    res.send(rcSTBCount);
+    res.send(rcSTBsAcNo);
 })
 
 // Export Router
