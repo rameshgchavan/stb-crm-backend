@@ -31,8 +31,8 @@ TransactionsRoutes.route("/").post(TokenVerification, async (req, res) => {
         : res.send(await TransactionsModel.find());
 })
 
-// HTTP request post method to get recharged stb count 
-TransactionsRoutes.route("/rcstbcount").post(TokenVerification, async (req, res) => {
+// HTTP request post method to get recharged stbs A/c No. 
+TransactionsRoutes.route("/rcstbacno").post(TokenVerification, async (req, res) => {
     const monthsList = [
         "Jan", "Feb", "Mar", "Apr",
         "May", "Jun", "Jul", "Aug",
