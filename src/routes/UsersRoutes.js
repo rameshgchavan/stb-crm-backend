@@ -9,7 +9,7 @@ const userScrutiny = require("../functions/userScrutiny");
 const tokenVerification = require("../functions/tokenVerificationModel");
 
 // Import Users Schema Model
-const usersModel = require("../models/usersModel")
+const usersModel = require("../models/UsersModel")
 
 // Environment setting
 dotEnv.config();
