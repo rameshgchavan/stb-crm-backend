@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const tokenVerification = require("../functions/tokenVerificationModel");
 
 // Import Customers Model function
-const customersModel = require("../models/customresModel");
+const customerModel = require("../models/customerModel");
 
 // Create Router object
 const customerRoutes = express.Router();
@@ -17,19 +17,19 @@ const customerRoutes = express.Router();
 customerRoutes.route("/:dbName").get(tokenVerification, async (req, res) => {
     const { dbName } = req.params;
 
-    const CustomersModel = customersModel(dbName)
-    res.send(await CustomersModel.find());
+    const CustomerModel = customerModel(dbName)
+    res.send(await CustomerModel.find());
 })
 
 // HTTP request post method to save
 customerRoutes.route("/save").post(tokenVerification, async (req, res) => {
     const { dbName, customerData } = req.body;
 
-    const CustomersModel = customersModel(dbName);
+    const CustomerModel = customerModel(dbName);
 
     // Save data (record) received in body to database and retun 201 response with message.
     try {
-        await CustomersModel(customerData).save();
+        await CustomerModel(customerData).save();
 
         res.send({
             code: 201,
@@ -56,17 +56,17 @@ customerRoutes.route("/update/:id").put(tokenVerification, async (req, res) => {
 
     // get dbName from body
     const { dbName, customerData } = req.body;
-    
-    const CustomersModel = customersModel(dbName);
+
+    const CustomerModel = customerModel(dbName);
 
     const saveDelete = async (bodyData, action) => {
         // Save document which is bodyData and then
         // Delete document which id is equal to param id 
         // and then send respose
 
-        await CustomersModel(bodyData).save()
+        await CustomerModel(bodyData).save()
             .then(async () => {
-                await CustomersModel.deleteOne({ _id: paramId });
+                await CustomerModel.deleteOne({ _id: paramId });
 
                 res.send({
                     code: 202,
@@ -102,7 +102,7 @@ customerRoutes.route("/update/:id").put(tokenVerification, async (req, res) => {
     else {
         // Find param id in database and update document received in body
         // and then send respose
-        await CustomersModel.findOneAndUpdate({ _id: paramId }, customerData)
+        await CustomerModel.findOneAndUpdate({ _id: paramId }, customerData)
             .then(res.send({
                 code: 202,
                 message: `Updated successfully.`

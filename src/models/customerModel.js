@@ -2,7 +2,7 @@
 const customerSchema = require("../schemas/customerSchema");
 const mongoDBConnection = require("../connection/mongoDbConnection");
 
-const customersModel = (dbName) => {
+const customerModel = (dbName) => {
     const connection = mongoDBConnection.useDb(dbName, { useCache: true });
 
     return (
@@ -13,7 +13,7 @@ const customersModel = (dbName) => {
 }
 
 // Export function
-module.exports = customersModel
+module.exports = customerModel
 
 // Note: mongoose model convert the collection name to lower case and
 // if the collection name is singular it convert to plural.

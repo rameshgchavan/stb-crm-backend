@@ -9,7 +9,7 @@ const userScrutiny = require("../functions/userScrutiny");
 const tokenVerification = require("../functions/tokenVerificationModel");
 
 // Import Users Schema Model
-const usersModel = require("../models/userModel")
+const userModel = require("../models/userModel")
 
 // Environment setting
 dotEnv.config();
@@ -25,10 +25,10 @@ userRoutes.route("/").post(tokenVerification, async (req, res) => {
     const { Admin, Email } = req.body.user;
 
     if (Admin == "stb-crm") {
-        res.send(await usersModel.find().select("Admin Status Name LastLogin"));
+        res.send(await userModel.find().select("Admin Status Name LastLogin"));
     }
     else if (Admin == "self") {
-        res.send(await usersModel.find({ Admin: Email.replace(".", "-") }).select("Admin Status Name"));
+        res.send(await userModel.find({ Admin: Email.replace(".", "-") }).select("Admin Status Name"));
     }
     else { res.send({ code: 401, message: "Unauthorized" }); }
 })
@@ -41,7 +41,7 @@ userRoutes.route("/update").put(tokenVerification, async (req, res) => {
     const key = Object.keys(object)[0];
     if (key == "Name" || key == "Status" || key == "LastLogin") {
         // Find by id and update object of document in collection
-        await usersModel.findOneAndUpdate({ _id: id }, object)
+        await userModel.findOneAndUpdate({ _id: id }, object)
             .then(res.send({
                 code: 202,
                 message: `Accepted successfully.`
@@ -72,7 +72,7 @@ userRoutes.route("/signup").post(async (req, res) => {
 
     if (scrutiny.code == 404) {
         // Save data (record) received in body to database and retun 201 response with message.
-        await usersModel(req.body).save()
+        await userModel(req.body).save()
             .then(res.send({
                 code: 201,
                 message: `Created successfully.`
@@ -87,7 +87,7 @@ userRoutes.route("/login").post(async (req, res) => {
 
     if (scrutiny.code == 200) {
         // Find autheticated user 
-        const user = await usersModel.findOne(req.body).select('-Password');
+        const user = await userModel.findOne(req.body).select('-Password');
         // Create token to secure routes and send it into response
         jwt.sign({}, JWTKEY, { expiresIn: "1h" }, (err, token) => {
             if (err) { res.send(err) }
@@ -106,7 +106,7 @@ userRoutes.route("/resetpass").put(async (req, res) => {
     //Change password if old password matched or not matched
     if (scrutiny.code == 200 || scrutiny.code == 403) {
         // Find email and update the password regarding that email and retun 202 response with message.
-        await usersModel.findOneAndUpdate({ Email: req.body.Email }, { Password: req.body.Password })
+        await userModel.findOneAndUpdate({ Email: req.body.Email }, { Password: req.body.Password })
             .then(res.send({
                 code: 202,
                 message: `Accepted successfully.`

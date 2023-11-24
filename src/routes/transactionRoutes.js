@@ -5,7 +5,7 @@ const express = require("express");
 const tokenVerification = require("../functions/tokenVerificationModel");
 
 // Import Transactions Model function
-const transactionsModel = require("../models/transactionModel");
+const transactionModel = require("../models/transactionModel");
 
 // Create Router object
 const transactionRoutes = express.Router();
@@ -15,10 +15,10 @@ const transactionRoutes = express.Router();
 transactionRoutes.route("/").post(tokenVerification, async (req, res) => {
     const { dbName, collectionName, acNo } = req.body;
 
-    const TransactionsModel = transactionsModel(dbName, collectionName);
+    const TransactionModel = transactionModel(dbName, collectionName);
 
-    acNo ? res.send(await TransactionsModel.find({ AcNo: acNo }))
-        : res.send(await TransactionsModel.find());
+    acNo ? res.send(await TransactionModel.find({ AcNo: acNo }))
+        : res.send(await TransactionModel.find());
 })
 
 // HTTP request post method to get recharged stbs A/c No. 
@@ -35,9 +35,9 @@ transactionRoutes.route("/rcstbacno").post(tokenVerification, async (req, res) =
 
     for (let i = 0; i < monthsList.length; i++) {
         const collectionName = `${monthsList[i]}-${ofYear}`;
-        const TransactionsModel = transactionsModel(dbName, collectionName);
+        const TransactionModel = transactionModel(dbName, collectionName);
 
-        rcSTBsAcNo.push(await TransactionsModel.find({
+        rcSTBsAcNo.push(await TransactionModel.find({
             $and: [
                 {
                     $or: [
