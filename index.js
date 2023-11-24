@@ -4,7 +4,7 @@ const dotEnv = require("dotenv");
 // const cors = require("cors");
 
 // Import Routes
-const UsersRoutes = require("./src/routes/UsersRoutes");
+const UsersRoutes = require("./src/routes/usersRoutes");
 const customersRoutes = require("./src/routes/customersRoutes");
 const transactionsRoutes = require("./src/routes/transactionsRoutes");
 
