@@ -5,7 +5,7 @@ const dotEnv = require("dotenv");
 
 // Import Routes
 const usersRoutes = require("./src/routes/userRoutes");
-const customersRoutes = require("./src/routes/customersRoutes");
+const customersRoutes = require("./src/routes/customerRoutes");
 const transactionsRoutes = require("./src/routes/transactionsRoutes");
 
 // Create object of express
