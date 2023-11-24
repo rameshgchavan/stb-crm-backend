@@ -10,11 +10,11 @@ const tokenVerification = require("../functions/tokenVerificationModel");
 const customersModel = require("../models/customresModel");
 
 // Create Router object
-const customersRoutes = express.Router();
+const customerRoutes = express.Router();
 
 // (APIs) downwards
 // HTTP request get method to get customers
-customersRoutes.route("/:dbName").get(tokenVerification, async (req, res) => {
+customerRoutes.route("/:dbName").get(tokenVerification, async (req, res) => {
     const { dbName } = req.params;
 
     const CustomersModel = customersModel(dbName)
@@ -22,7 +22,7 @@ customersRoutes.route("/:dbName").get(tokenVerification, async (req, res) => {
 })
 
 // HTTP request post method to save
-customersRoutes.route("/save").post(tokenVerification, async (req, res) => {
+customerRoutes.route("/save").post(tokenVerification, async (req, res) => {
     const { dbName, customerData } = req.body;
 
     const CustomersModel = customersModel(dbName);
@@ -46,7 +46,7 @@ customersRoutes.route("/save").post(tokenVerification, async (req, res) => {
 });
 
 // HTTP request put method to update
-customersRoutes.route("/update/:id").put(tokenVerification, async (req, res) => {
+customerRoutes.route("/update/:id").put(tokenVerification, async (req, res) => {
     // get id from path
     const paramId = req.params.id;
     // get id and status from body
@@ -112,4 +112,4 @@ customersRoutes.route("/update/:id").put(tokenVerification, async (req, res) => 
 });
 
 // Export Router
-module.exports = customersRoutes;
+module.exports = customerRoutes;

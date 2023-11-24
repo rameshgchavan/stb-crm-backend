@@ -8,11 +8,11 @@ const tokenVerification = require("../functions/tokenVerificationModel");
 const transactionsModel = require("../models/transactionsModel");
 
 // Create Router object
-const transactionsRoutes = express.Router();
+const transactionRoutes = express.Router();
 
 // (APIs) downwards
 // HTTP request post method to get transactions
-transactionsRoutes.route("/").post(tokenVerification, async (req, res) => {
+transactionRoutes.route("/").post(tokenVerification, async (req, res) => {
     const { dbName, collectionName, acNo } = req.body;
 
     const TransactionsModel = transactionsModel(dbName, collectionName);
@@ -22,7 +22,7 @@ transactionsRoutes.route("/").post(tokenVerification, async (req, res) => {
 })
 
 // HTTP request post method to get recharged stbs A/c No. 
-transactionsRoutes.route("/rcstbacno").post(tokenVerification, async (req, res) => {
+transactionRoutes.route("/rcstbacno").post(tokenVerification, async (req, res) => {
     const monthsList = [
         "Jan", "Feb", "Mar", "Apr",
         "May", "Jun", "Jul", "Aug",
@@ -55,4 +55,4 @@ transactionsRoutes.route("/rcstbacno").post(tokenVerification, async (req, res) 
 })
 
 // Export Router
-module.exports = transactionsRoutes;
+module.exports = transactionRoutes;
