@@ -4,7 +4,7 @@ const dotEnv = require("dotenv");
 // const cors = require("cors");
 
 // Import Routes
-const usersRoutes = require("./src/routes/usersRoutes");
+const UsersRoutes = require("./src/routes/UsersRoutes");
 const customersRoutes = require("./src/routes/customersRoutes");
 const transactionsRoutes = require("./src/routes/transactionsRoutes");
 
@@ -14,7 +14,7 @@ const app = express();
 // Use middlewares and routes in express
 // app.use(cors());
 app.use(express.json());
-app.use("/users", usersRoutes);
+app.use("/users", UsersRoutes);
 app.use("/customers", customersRoutes);
 app.use("/transactions", transactionsRoutes);
 

@@ -16,11 +16,11 @@ dotEnv.config();
 const JWTKEY = process.env.JWTKEY
 
 // Create Router object
-const usersRoutes = express.Router();
+const UsersRoutes = express.Router();
 
 // (APIs) downwards
 // HTTP request post method to get users
-usersRoutes.route("/").post(tokenVerification, async (req, res) => {
+UsersRoutes.route("/").post(tokenVerification, async (req, res) => {
     // Destruct request body
     const { Admin, Email } = req.body.user;
 
@@ -34,7 +34,7 @@ usersRoutes.route("/").post(tokenVerification, async (req, res) => {
 })
 
 // HTTP request put method to update users
-usersRoutes.route("/update").put(tokenVerification, async (req, res) => {
+UsersRoutes.route("/update").put(tokenVerification, async (req, res) => {
     // Destruct request body
     const { id, object } = req.body;
     // Restrict to update Name or Status or LastLogin only
@@ -50,7 +50,7 @@ usersRoutes.route("/update").put(tokenVerification, async (req, res) => {
 })
 
 // HTTP request post method to check email exsists or not
-usersRoutes.route("/isemail").post(async (req, res) => {
+UsersRoutes.route("/isemail").post(async (req, res) => {
     // Scrutinize Email
     const scrutiny = await userScrutiny(req.body);
     // If not email exsist
@@ -66,7 +66,7 @@ usersRoutes.route("/isemail").post(async (req, res) => {
 })
 
 // HTTP request post method to signup
-usersRoutes.route("/signup").post(async (req, res) => {
+UsersRoutes.route("/signup").post(async (req, res) => {
     // Scrutinize Email
     const scrutiny = await userScrutiny(req.body);
 
@@ -81,7 +81,7 @@ usersRoutes.route("/signup").post(async (req, res) => {
 })
 
 // HTTP request post method to login
-usersRoutes.route("/login").post(async (req, res) => {
+UsersRoutes.route("/login").post(async (req, res) => {
     // Scrutinize Email and password
     const scrutiny = await userScrutiny(req.body);
 
@@ -100,7 +100,7 @@ usersRoutes.route("/login").post(async (req, res) => {
 });
 
 // HTTP request put method to reset password
-usersRoutes.route("/resetpass").put(async (req, res) => {
+UsersRoutes.route("/resetpass").put(async (req, res) => {
     // Scrutinize Email
     const scrutiny = await userScrutiny(req.body);
     //Change password if old password matched or not matched
@@ -115,4 +115,4 @@ usersRoutes.route("/resetpass").put(async (req, res) => {
 });
 
 // Export Router
-module.exports = usersRoutes;
+module.exports = UsersRoutes;
