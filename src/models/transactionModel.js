@@ -2,7 +2,7 @@
 const transactionSchema = require("../schemas/transactionScheme");
 const mongoDBConnection = require("../connection/mongoDbConnection");
 
-const transactionsModel = (dbName, collectionName) => {
+const transactionModel = (dbName, collectionName) => {
     const connection = mongoDBConnection.useDb(dbName, { useCache: true });
 
     return (
@@ -12,4 +12,4 @@ const transactionsModel = (dbName, collectionName) => {
 }
 
 // Export function
-module.exports = transactionsModel;
+module.exports = transactionModel;

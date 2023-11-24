@@ -5,7 +5,7 @@ const express = require("express");
 const tokenVerification = require("../functions/tokenVerificationModel");
 
 // Import Transactions Model function
-const transactionsModel = require("../models/transactionsModel");
+const transactionsModel = require("../models/transactionModel");
 
 // Create Router object
 const transactionRoutes = express.Router();
