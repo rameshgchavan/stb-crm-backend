@@ -72,7 +72,7 @@ usersRoutes.route("/signup").post(async (req, res) => {
 
     if (scrutiny.code == 404) {
         // Save data (record) received in body to database and retun 201 response with message.
-        await UsersModel(req.body).save()
+        await usersModel(req.body).save()
             .then(res.send({
                 code: 201,
                 message: `Created successfully.`
@@ -106,7 +106,7 @@ usersRoutes.route("/resetpass").put(async (req, res) => {
     //Change password if old password matched or not matched
     if (scrutiny.code == 200 || scrutiny.code == 403) {
         // Find email and update the password regarding that email and retun 202 response with message.
-        await UsersModel.findOneAndUpdate({ Email: req.body.Email }, { Password: req.body.Password })
+        await usersModel.findOneAndUpdate({ Email: req.body.Email }, { Password: req.body.Password })
             .then(res.send({
                 code: 202,
                 message: `Accepted successfully.`
