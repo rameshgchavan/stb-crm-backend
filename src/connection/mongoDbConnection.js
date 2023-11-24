@@ -6,17 +6,17 @@ dotEnv.config();
 const connectionString = `${process.env.MONGODB_URL}`;
 
 // Create connection
-const mongoDBConnection = mongoose.createConnection(
+const MongoDbConnection = mongoose.createConnection(
     connectionString,
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
-mongoDBConnection.on("connected", () => {
+MongoDbConnection.on("connected", () => {
     console.log("Connection established successfully.");
 });
 
-mongoDBConnection.on("error", (err) => {
+MongoDbConnection.on("error", (err) => {
     console.log(`Connection failed, error: ${err}`);
 });
 
-module.exports = mongoDBConnection;
+module.exports = MongoDbConnection;
