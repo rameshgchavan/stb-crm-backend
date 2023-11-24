@@ -1,5 +1,5 @@
 // Import UsersModel schema
-const usersModel = require("../models/UsersModel")
+const usersModel = require("../models/usersModel")
 
 // Fuction to verify authenticattion
 const userScrutiny = async (reqBody) => {

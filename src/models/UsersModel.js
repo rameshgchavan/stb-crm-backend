@@ -1,7 +1,7 @@
 // Import mongoose
 const userSchema = require("../schemas/userSchema");
-const mongoDbConnection = require("../connection/MongoDbConnection");
-const connection = mongoDbConnection.useDb("stb-crm", { useCache: true });
+const MongoDbConnection = require("../connection/mongoDbConnection");
+const connection = MongoDbConnection.useDb("stb-crm", { useCache: true });
 
 // Export Model
 module.exports = connection.model("Users", userSchema); // "Users" is collections name
