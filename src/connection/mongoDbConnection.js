@@ -12,11 +12,11 @@ const mongoDbConnection = mongoose.createConnection(
 );
 
 mongoDbConnection.on("connected", () => {
-    console.log("Connection established successfully.");
+    console.log("Database connection established successfully.");
 });
 
 mongoDbConnection.on("error", (err) => {
-    console.log(`Connection failed, error: ${err}`);
+    console.log(`Database connection failed, error: ${err}`);
 });
 
 module.exports = mongoDbConnection;
