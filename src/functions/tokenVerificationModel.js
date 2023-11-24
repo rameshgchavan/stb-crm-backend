@@ -6,7 +6,7 @@ dotEnv.config();
 const JWTKEY = process.env.JWTKEY;
 
 // Fuction to verify token received from client
-const TokenVerification = async (req, res, next) => {
+const tokenVerification = async (req, res, next) => {
     // Get token received in header from client
     let token = req.headers["authorization"];
     // If token exist
@@ -27,4 +27,4 @@ const TokenVerification = async (req, res, next) => {
     else { res.send({ code: 204, message: "No content" }) } // If not token exsist
 }
 
-module.exports = TokenVerification
+module.exports = tokenVerification;

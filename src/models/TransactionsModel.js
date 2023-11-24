@@ -1,30 +1,15 @@
 // Import mongoose
-const mongoose = require("mongoose");
+const transactionSchema = require("../schemas/transactionScheme");
+const mongoDBConnection = require("../connection/mongoDBConnection");
 
-// Create Schema
-const TransactionsSchema = new mongoose.Schema({
-    DateAcNo: String,
-    TransactionDateTime: Date,
-    ExpiryDate: Date,
-    Priority: Number,
-    PlanType: String,
-    TransactionType: String,
-    AcNo: String,
-    PlanName: String,
-    BasePrice: Number,
-    LCOPrice: Number,
-    SDCount: Number,
-    HDCount: Number,
-    NCF: Number,
-    CustomerID: String
-});
+const transactionsModel = (dbName, collectionName) => {
+    const connection = mongoDBConnection.useDb(dbName, { useCache: true });
 
-// Export Schema
-module.exports = TransactionsSchema; 
+    return (
+        connection.models[collectionName]
+        || connection.model(collectionName, transactionSchema)
+    )
+}
 
-// Export Model
-// module.exports = mongoose.model("May-2023", TransactionsSchema); // May-2023 is collections name
-
-// Note: mongoose model convert the collection name to lower case and
-// if the collection name is singular it convert to plural.
-// e.g User >> users
+// Export function
+module.exports = transactionsModel;

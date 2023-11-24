@@ -3,39 +3,29 @@ const express = require("express");
 // Import mongoose
 const mongoose = require("mongoose");
 
-// Import TokenVerification Model
-const TokenVerification = require("../models/security/TokenVerificationModel");
+// Import tokenVerification Model
+const tokenVerification = require("../functions/tokenVerificationModel");
 
-// Import mongoDB Connection
-const mongoDBConnection = require("../MongoDBConnection");
-
-// Import Customers Schema
-const CustomersSchema = require("../models/CustomersModel")
+// Import Customers Model function
+const customersModel = require("../models/customresModel");
 
 // Create Router object
-const CustomersRoutes = express.Router();
+const customersRoutes = express.Router();
 
 // (APIs) downwards
 // HTTP request get method to get customers
-CustomersRoutes.route("/:dbName").get(TokenVerification, async (req, res) => {
+customersRoutes.route("/:dbName").get(tokenVerification, async (req, res) => {
     const { dbName } = req.params;
 
-    const connection = mongoDBConnection.useDb(dbName, { useCache: true });
-
-    const CustomersModel = connection.models["Customers-Details"]
-        || connection.model("Customers-Details", CustomersSchema)
-
+    const CustomersModel = customersModel(dbName)
     res.send(await CustomersModel.find());
 })
 
 // HTTP request post method to save
-CustomersRoutes.route("/save").post(TokenVerification, async (req, res) => {
+customersRoutes.route("/save").post(tokenVerification, async (req, res) => {
     const { dbName, customerData } = req.body;
 
-    const connection = mongoDBConnection.useDb(dbName, { useCache: true });
-
-    const CustomersModel = connection.models["Customers-Details"]
-        || connection.model("Customers-Details", CustomersSchema)
+    const CustomersModel = customersModel(dbName);
 
     // Save data (record) received in body to database and retun 201 response with message.
     try {
@@ -56,7 +46,7 @@ CustomersRoutes.route("/save").post(TokenVerification, async (req, res) => {
 });
 
 // HTTP request put method to update
-CustomersRoutes.route("/update/:id").put(TokenVerification, async (req, res) => {
+customersRoutes.route("/update/:id").put(tokenVerification, async (req, res) => {
     // get id from path
     const paramId = req.params.id;
     // get id and status from body
@@ -66,11 +56,8 @@ CustomersRoutes.route("/update/:id").put(TokenVerification, async (req, res) => 
 
     // get dbName from body
     const { dbName, customerData } = req.body;
-
-    const connection = mongoDBConnection.useDb(dbName, { useCache: true });
-
-    const CustomersModel = connection.models["Customers-Details"]
-        || connection.model("Customers-Details", CustomersSchema)
+    
+    const CustomersModel = customersModel(dbName);
 
     const saveDelete = async (bodyData, action) => {
         // Save document which is bodyData and then
@@ -125,4 +112,4 @@ CustomersRoutes.route("/update/:id").put(TokenVerification, async (req, res) => 
 });
 
 // Export Router
-module.exports = CustomersRoutes;
+module.exports = customersRoutes;

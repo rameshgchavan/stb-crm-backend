@@ -1,12 +1,12 @@
 // Import UsersModel schema
-const UsersModel = require("../UsersModel")
+const usersModel = require("../models/usersModel")
 
 // Fuction to verify authenticattion
-const Scrutiny = async (reqBody) => {
+const userScrutiny = async (reqBody) => {
     // Destruct request body
     const { Email, Password } = reqBody;
     // Find email in database
-    const isEmail = await UsersModel.findOne({ Email });
+    const isEmail = await usersModel.findOne({ Email });
     // If not email exsist
     if (!isEmail) {
         return {
@@ -42,4 +42,4 @@ const Scrutiny = async (reqBody) => {
     }
 }
 
-module.exports = Scrutiny
+module.exports = userScrutiny;

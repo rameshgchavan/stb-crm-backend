@@ -5,10 +5,18 @@ const dotEnv = require("dotenv");
 dotEnv.config();
 const connectionString = `${process.env.MONGODB_URL}`;
 
-// Connect to database
+// Create connection
 const mongoDBConnection = mongoose.createConnection(
     connectionString,
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
+
+mongoDBConnection.on("connected", () => {
+    console.log("Connection established successfully.");
+});
+
+mongoDBConnection.on("error", (err) => {
+    console.log(`Connection failed, error: ${err}`);
+});
 
 module.exports = mongoDBConnection;

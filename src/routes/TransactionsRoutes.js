@@ -1,38 +1,28 @@
 // Import express
 const express = require("express");
-// Import mongoose
-const mongoose = require("mongoose");
 
+// Import tokenVerification Model
+const tokenVerification = require("../functions/tokenVerificationModel");
 
-
-// Import TokenVerification Model
-const TokenVerification = require("../models/security/TokenVerificationModel");
-
-// Import mongoDB Connection
-const mongoDBConnection = require("../MongoDBConnection");
-
-// Import Transactions Schema
-const TransactionsSchema = require("../models/TransactionsModel");
+// Import Transactions Model function
+const transactionsModel = require("../models/transactionsModel");
 
 // Create Router object
-const TransactionsRoutes = express.Router();
+const transactionsRoutes = express.Router();
 
 // (APIs) downwards
 // HTTP request post method to get transactions
-TransactionsRoutes.route("/").post(TokenVerification, async (req, res) => {
+transactionsRoutes.route("/").post(tokenVerification, async (req, res) => {
     const { dbName, collectionName, acNo } = req.body;
 
-    const connection = mongoDBConnection.useDb(dbName, { useCache: true });
-
-    const TransactionsModel = connection.models[collectionName]
-        || connection.model(collectionName, TransactionsSchema);
+    const TransactionsModel = transactionsModel(dbName, collectionName);
 
     acNo ? res.send(await TransactionsModel.find({ AcNo: acNo }))
         : res.send(await TransactionsModel.find());
 })
 
 // HTTP request post method to get recharged stbs A/c No. 
-TransactionsRoutes.route("/rcstbacno").post(TokenVerification, async (req, res) => {
+transactionsRoutes.route("/rcstbacno").post(tokenVerification, async (req, res) => {
     const monthsList = [
         "Jan", "Feb", "Mar", "Apr",
         "May", "Jun", "Jul", "Aug",
@@ -43,11 +33,9 @@ TransactionsRoutes.route("/rcstbacno").post(TokenVerification, async (req, res) 
 
     const { dbName, ofYear } = req.body;
 
-    const connection = mongoDBConnection.useDb(dbName, { useCache: true });
-
     for (let i = 0; i < monthsList.length; i++) {
-        const TransactionsModel = connection.models[`${monthsList[i]}-${ofYear}`]
-            || connection.model(`${monthsList[i]}-${ofYear}`, TransactionsSchema);
+        const collectionName = `${monthsList[i]}-${ofYear}`;
+        const TransactionsModel = transactionsModel(dbName, collectionName);
 
         rcSTBsAcNo.push(await TransactionsModel.find({
             $and: [
@@ -67,4 +55,4 @@ TransactionsRoutes.route("/rcstbacno").post(TokenVerification, async (req, res) 
 })
 
 // Export Router
-module.exports = TransactionsRoutes;
+module.exports = transactionsRoutes;

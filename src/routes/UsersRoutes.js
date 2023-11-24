@@ -3,45 +3,45 @@ const express = require("express");
 const dotEnv = require("dotenv");
 const jwt = require("jsonwebtoken");
 
-// Import Scrutiny Model
-const Scrutiny = require("../models/security/ScrutinyModel");
-// Import TokenVerification Model
-const TokenVerification = require("../models/security/TokenVerificationModel");
+// Import userScrutiny Model
+const userScrutiny = require("../functions/userScrutiny");
+// Import tokenVerification Model
+const tokenVerification = require("../functions/tokenVerificationModel");
 
 // Import Users Schema Model
-const UsersModel = require("../models/UsersModel")
+const usersModel = require("../models/usersModel")
 
 // Environment setting
 dotEnv.config();
 const JWTKEY = process.env.JWTKEY
 
 // Create Router object
-const UsersRoutes = express.Router();
+const usersRoutes = express.Router();
 
 // (APIs) downwards
 // HTTP request post method to get users
-UsersRoutes.route("/").post(TokenVerification, async (req, res) => {
+usersRoutes.route("/").post(tokenVerification, async (req, res) => {
     // Destruct request body
     const { Admin, Email } = req.body.user;
 
     if (Admin == "stb-crm") {
-        res.send(await UsersModel.find().select("Admin Status Name LastLogin"));
+        res.send(await usersModel.find().select("Admin Status Name LastLogin"));
     }
     else if (Admin == "self") {
-        res.send(await UsersModel.find({ Admin: Email.replace(".", "-") }).select("Admin Status Name"));
+        res.send(await usersModel.find({ Admin: Email.replace(".", "-") }).select("Admin Status Name"));
     }
     else { res.send({ code: 401, message: "Unauthorized" }); }
 })
 
 // HTTP request put method to update users
-UsersRoutes.route("/update").put(TokenVerification, async (req, res) => {
+usersRoutes.route("/update").put(tokenVerification, async (req, res) => {
     // Destruct request body
     const { id, object } = req.body;
     // Restrict to update Name or Status or LastLogin only
     const key = Object.keys(object)[0];
     if (key == "Name" || key == "Status" || key == "LastLogin") {
         // Find by id and update object of document in collection
-        await UsersModel.findOneAndUpdate({ _id: id }, object)
+        await usersModel.findOneAndUpdate({ _id: id }, object)
             .then(res.send({
                 code: 202,
                 message: `Accepted successfully.`
@@ -50,9 +50,9 @@ UsersRoutes.route("/update").put(TokenVerification, async (req, res) => {
 })
 
 // HTTP request post method to check email exsists or not
-UsersRoutes.route("/isemail").post(async (req, res) => {
+usersRoutes.route("/isemail").post(async (req, res) => {
     // Scrutinize Email
-    const scrutiny = await Scrutiny(req.body);
+    const scrutiny = await userScrutiny(req.body);
     // If not email exsist
     if (scrutiny.code == 404) {
         res.send(scrutiny)
@@ -66,9 +66,9 @@ UsersRoutes.route("/isemail").post(async (req, res) => {
 })
 
 // HTTP request post method to signup
-UsersRoutes.route("/signup").post(async (req, res) => {
+usersRoutes.route("/signup").post(async (req, res) => {
     // Scrutinize Email
-    const scrutiny = await Scrutiny(req.body);
+    const scrutiny = await userScrutiny(req.body);
 
     if (scrutiny.code == 404) {
         // Save data (record) received in body to database and retun 201 response with message.
@@ -81,13 +81,13 @@ UsersRoutes.route("/signup").post(async (req, res) => {
 })
 
 // HTTP request post method to login
-UsersRoutes.route("/login").post(async (req, res) => {
+usersRoutes.route("/login").post(async (req, res) => {
     // Scrutinize Email and password
-    const scrutiny = await Scrutiny(req.body);
+    const scrutiny = await userScrutiny(req.body);
 
     if (scrutiny.code == 200) {
         // Find autheticated user 
-        const user = await UsersModel.findOne(req.body).select('-Password');
+        const user = await usersModel.findOne(req.body).select('-Password');
         // Create token to secure routes and send it into response
         jwt.sign({}, JWTKEY, { expiresIn: "1h" }, (err, token) => {
             if (err) { res.send(err) }
@@ -100,9 +100,9 @@ UsersRoutes.route("/login").post(async (req, res) => {
 });
 
 // HTTP request put method to reset password
-UsersRoutes.route("/resetpass").put(async (req, res) => {
+usersRoutes.route("/resetpass").put(async (req, res) => {
     // Scrutinize Email
-    const scrutiny = await Scrutiny(req.body);
+    const scrutiny = await userScrutiny(req.body);
     //Change password if old password matched or not matched
     if (scrutiny.code == 200 || scrutiny.code == 403) {
         // Find email and update the password regarding that email and retun 202 response with message.
@@ -115,4 +115,4 @@ UsersRoutes.route("/resetpass").put(async (req, res) => {
 });
 
 // Export Router
-module.exports = UsersRoutes;
+module.exports = usersRoutes;
