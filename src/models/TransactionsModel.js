@@ -1,6 +1,6 @@
 // Import mongoose
 const transactionSchema = require("../schemas/transactionScheme");
-const mongoDBConnection = require("../connection/mongoDBConnection");
+const mongoDBConnection = require("../connection/MongoDbConnection");
 
 const transactionsModel = (dbName, collectionName) => {
     const connection = mongoDBConnection.useDb(dbName, { useCache: true });
