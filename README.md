@@ -111,60 +111,21 @@ This funtions verifies user credentilas
 
 ### ./src/`routes`
 - #### /`customerRoutes.js`
-This route contains Customer related CRUD APIs to read, write and change the requested data from/to database (MongoDB)
+This express route contains Customer related CRUD APIs to read, write and change the requested data from/to database (MongoDB) using mongoose
 
 - #### /`transactionRoutes.js`
-This route contains Transactions related CRUD APIs to read, write and change the requested data from/to database (MongoDB)
+This express route contains Transactions related CRUD APIs to read, write and change the requested data from/to database (MongoDB) using mongoose
 
 - #### /`userRoutes.js`
-This route contains User related CRUD APIs to read, write and change the requested data from/to database (MongoDB)
+This express route contains User related CRUD APIs to read, write and change the requested data from/to database (MongoDB) using mongoose
 
 ### `index.js`
+- This is a main Javascript file of sever.
+- In this file imported routes of APIs 
+- In this file express app uses modules, packages, middleware, routes
+- runs frontend build using express static (optional)
+- and express app listening of given PORT
 
-
-### Create Schema Models (/models/(e.g. UsersModel.js))
-- Import mongoose >> Create schema >> export mongoose model as module
-
-### Create TokenVerification Model in models/secutiy folder
-- Import jsonwebtoken, dotenv
-- Configure and set environment keies
-- Create fuction TokenVerification to verify token
-
-### Routes (/Routes/(e.g. UsersRoute.js))
-- Import express and models (e.g. UsersModel)
-- Create express.Router object (e.g. UsersRoutes)
-- Create route http request as
-  - route("/").post
-    - Use TokenVerification fuction in this route
-  - route("/isemail").post
-  - route("/signup").post
-  - route("/login").post
-  - route("/resetpass").put 
-- Export router (e.g. UsersRoutes) as module
-
-### Create Scrutiny Model in models/secutiy folder
-- Import UsersModel schema
-- Create fuction Scrutiny to scrutinize user by email, password and approval
-
-### Setting Server (server.js)
-- Import dependancies/middlewares
-  - express, mongoose and dotenv
-- Import Routes (e.g. UsersRoute)
-- Create object of express as app 
-- Environment setting
-  - dotEnv.config();
-  - const PORT = process.env.PORT;
-  - const connectionString = process.env.MONGODB_URL
-- connect to mongodb using mongoose and listen to port
-- Use middlewares and routes in express
-  - app.use(cors())
-  - app.use(express.json())
-  - app.use("/users", UsersRoutes)
-- To run frontend
-  - app.use(express.static('./client/build'))
-
-### To check server on local machine
-- Type "nodemon server" in command prompt and hit enter 
-
-
-
+### About me: 
+- Ramesh Chavan, Full Stack Web Developer|MERN|AlmaBetter Trainee .
+    - Email: ramesh7452@gmail.com.
