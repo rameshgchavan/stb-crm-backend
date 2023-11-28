@@ -7,6 +7,10 @@
 - Uses JWT token for security purpose
 #
 
+### APIs Documentation
+[Read](https://documenter.getpostman.com/view/16188551/2s9YeEdskW)
+#
+
 ### Project status
 Updating on users feedbacks.
 #
