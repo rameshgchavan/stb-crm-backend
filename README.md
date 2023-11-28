@@ -2,7 +2,7 @@
 
 ### About Server
 - This server listen requestes from frontend web app
-- Fetch, write and update requested data from/to database (MonogoDb)
+- Fetch, Write and Update requested data from/to database (MongoDb)
 - Send back requested data to frontend web app through the response
 - Uses JWT token for security purpose
 #
