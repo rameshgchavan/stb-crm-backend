@@ -37,17 +37,24 @@ Updating on users feedbacks.
 8. Type: "code ." and hit enter. Visual Studio Code will open
 #
 
-#### In package.json file
+#### Inside package.json file
 - Add script: `"dev":"nodemon index.js"`
 
   ![image](https://github.com/rameshgchavan/stb-crm-backend/assets/109573381/0d8f0f32-6762-4346-a577-bfc96c0be2f6)
 #
 
-#### Setting environment keys (.env)
-- PORT, MONGODB_URL and JWTKEY
+#### Setting environment keys
+- Inside .env add keys and set values:
+     - PORT= 5000
+     - MONGODB_URL= "mongodb+srv://databasepath"
+     - JWTKEY="jwtkey"
 
-#### Ignore (In .ignore file)
-- Add: .env and /node_modules
+  Note: Above values are only examples
+#
+
+#### Ignore
+- Inside .ignore add: .env and /node_modules
+#
 
 #### In command prompt 
 - Type `npm install nodemon -g`, hit Enter key on keyboard and wait for until it finished
