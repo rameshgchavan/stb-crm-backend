@@ -43,48 +43,40 @@ Updating on users feedbacks.
   ![image](https://github.com/rameshgchavan/stb-crm-backend/assets/109573381/0d8f0f32-6762-4346-a577-bfc96c0be2f6)
 #
 
+#### Setting environment keys (.env)
+- PORT, MONGODB_URL and JWTKEY
+
+#### Ignore (In .ignore file)
+- Add: .env and /node_modules
+
 #### In command prompt 
 - Type `npm install nodemon -g`, hit Enter key on keyboard and wait for until it finished
 - Type `npm dev run` to run backend server locally.
 #
 
+## Project description
+- This project has developed by using
+     - `Node.js` (Javascript runtime environmet)
+     - `express.js` (Node.js framework designed to build API's web applications cross-platform)
+     - `mongoose` (Node.js-based Object Data Modeling (ODM) library for MongoDB)
+- This project devided into mudules which contains Database connection, Express routes (APIs), mongoose schemas, models and custom functions.
+- Project folders and files structure looks like as shown in following image.
 
+![image](https://github.com/rameshgchavan/stb-crm-backend/assets/109573381/0527aa36-6073-4219-b673-eb7cd28c762b)
 
+### Dependencies: 
+![image](https://github.com/rameshgchavan/stb-crm-backend/assets/109573381/8b8fd63a-4d3c-43f6-b8fa-0f7c27a98aae)
 
-# stb-crm-backend
-
-### Step to create project on local machine
-1. create: stb-crm-backend folder into your drive
-2. type: "cmd" in folder address bar and hit enter. Command prompt will open
-3. type: "code ." and hit enter. VS code editor will open
-4. create: .ingnore, .env and server.js files into folder stb-crm-backend
-5. create: src and client folders into stb-crm-backend
-6. create: routes and models folders into src folder
-7. add: if you have build of your frontend then add it into client folder
-
-### Requarements: 
-- type: npm install cors, dotenv, express and mongoose --save 
-- type: npm install nodemon -g 
-
-##### Project structure looks like as shown in image
-![image](https://github.com/rameshgchavan/stb-crm-backend/assets/109573381/e220e09e-fa51-4cef-b499-97a23906357c)
-
-##
 ### Steps to set server >>>
 ##
 
-### Setting environment keys (.env)
-- PORT and MONGODB_URL
-
-### Ignore (.ignore)
-- .env and /node_modules
 
 ### Create Schema Models (/models/(e.g. UsersModel.js))
 - Import mongoose >> Create schema >> export mongoose model as module
 
 ### Create TokenVerification Model in models/secutiy folder
 - Import jsonwebtoken, dotenv
-- Configure and cet environment keies
+- Configure and set environment keies
 - Create fuction TokenVerification to verify token
 
 ### Routes (/Routes/(e.g. UsersRoute.js))
