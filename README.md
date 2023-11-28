@@ -74,8 +74,52 @@ Updating on users feedbacks.
 ### Dependencies: 
 ![image](https://github.com/rameshgchavan/stb-crm-backend/assets/109573381/8b8fd63a-4d3c-43f6-b8fa-0f7c27a98aae)
 
-### Steps to set server >>>
-##
+### Elaboration:
+### ./src/`connection`
+- #### /`mongoDbConnection.js`
+In this file I have made connection with MongoDB database using mongoose. 
+
+### ./src/`schemas`
+- #### /`customerSchema.js`
+This mongoose schema contains a Customer related data types and keys
+
+- #### /`transactionScheme.js`
+This mongoose schema contains a Transaction related data types and keys
+
+- #### /`userSchema.js`
+This mongoose schema contains a User related data types and keys
+
+### ./src/`models`
+- #### /`customerModel.js`
+     - In this model I have imorted Customer schema and send it with collection name to MonogDB
+     - and exorted as model
+
+- #### /`transactionModel.js`
+     - In this model I have imorted Transaction schema and send it with collection name to MonogDB
+     - and exorted as model
+
+- #### /`userModel.js`
+     - In this model I have imorted User schema and send it with collection name to MonogDB
+     - and exorted as model
+
+### ./src/`functions`
+- #### /`tokenVerificationModel.js`
+This funtions verifies the token
+
+- #### /`userScrutiny.js`
+This funtions verifies user credentilas
+
+### ./src/`routes`
+- #### /`customerRoutes.js`
+This route contains Customer related CRUD APIs to read, write and change the requested data from/to database (MongoDB)
+
+- #### /`transactionRoutes.js`
+This route contains Transactions related CRUD APIs to read, write and change the requested data from/to database (MongoDB)
+
+- #### /`userRoutes.js`
+This route contains User related CRUD APIs to read, write and change the requested data from/to database (MongoDB)
+
+### `index.js`
 
 
 ### Create Schema Models (/models/(e.g. UsersModel.js))
