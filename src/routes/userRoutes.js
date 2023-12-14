@@ -25,7 +25,7 @@ userRoutes.route("/").post(tokenVerification, async (req, res) => {
     const { Admin, Email } = req.body.user;
 
     if (Admin == "stb-crm") {
-        res.send(await userModel.find().select("Admin Status Name LastLogin"));
+        res.send(await userModel.find().select("-Password"));
     }
     else if (Admin == "self") {
         res.send(await userModel.find({ Admin: Email.replace(".", "-") }).select("Admin Status Name"));
@@ -39,7 +39,7 @@ userRoutes.route("/update").put(tokenVerification, async (req, res) => {
     const { id, object } = req.body;
     // Restrict to update Name or Status or LastLogin only
     const key = Object.keys(object)[0];
-    if (key == "Name" || key == "Status" || key == "LastLogin") {
+    if (key != "Email" && key != "Password" && key != "Admin") {
         // Find by id and update object of document in collection
         await userModel.findOneAndUpdate({ _id: id }, object)
             .then(res.send({
