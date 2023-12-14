@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
     Password: String,
     Admin: String,
     Status: String,
-    LastLogin: String
+    LastLogin: String,
+    BulkTransactions: Boolean
 });
 
 // Export Schema
