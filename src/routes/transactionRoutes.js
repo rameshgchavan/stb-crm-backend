@@ -76,8 +76,12 @@ transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFil
         Address: "",
         VC_NDS_MAC_ID: "N/A",
         LCOCode: "N/A",
+        STBStatus: "N/A",
+        STBState: "N/A",
+        STBLocation: "N/A",
         AreaManager: "N/A",
         AreaPerson: "N/A",
+        Remark: "N/A"
     };
 
     const { dbname, yearmonth: yearMonth } = req.headers;
@@ -89,7 +93,7 @@ transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFil
 
     // Findding only selected fields
     const customersDataFromDB = await CustomerModel.find()
-        .select("IsFree CustName MobNo Area Address AcNo VC_NDS_MAC_ID LCOCode STBStatus STBState STBLocation AreaManager AreaPerson");
+        .select("IsFree CustName MobNo Area Address AcNo VC_NDS_MAC_ID LCOCode STBStatus STBState STBLocation AreaManager AreaPerson Remark");
 
     const plansDataFromDB = await PlanModel.find();
 
