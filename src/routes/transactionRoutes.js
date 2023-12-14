@@ -86,8 +86,6 @@ transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFil
 
     const { dbname, yearmonth: yearMonth } = req.headers;
 
-    console.log(yearMonth)
-
     const CustomerModel = customerModel(dbname);
     const PlanModel = planModel(dbname);
 
