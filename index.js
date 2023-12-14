@@ -7,6 +7,7 @@ const dotEnv = require("dotenv");
 const userRoutes = require("./src/routes/userRoutes");
 const customerRoutes = require("./src/routes/customerRoutes");
 const transactionRoutes = require("./src/routes/transactionRoutes");
+const planRoutes = require("./src/routes/planRoutes")
 
 // Create object of express
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/customers", customerRoutes);
 app.use("/transactions", transactionRoutes);
+app.use("/plans", planRoutes);
 
 //Run frontend
 app.use(express.static('./client/build')); //Note: Copy build folder of frontend and paste it into backend

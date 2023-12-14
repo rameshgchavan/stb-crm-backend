@@ -1,5 +1,19 @@
 // Import express
 const express = require("express");
+const csvtojson = require("convert-csv-to-json");
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        return cb(null, "./public")
+    },
+    filename: function (req, file, cb) {
+        return cb(null, "Customers.csv")
+    }
+});
+
+const upload = multer({ storage });
+
 // Import mongoose
 const mongoose = require("mongoose");
 
@@ -43,6 +57,52 @@ customerRoutes.route("/save").post(tokenVerification, async (req, res) => {
         });
     }
 
+});
+
+// API to convert csv file to json and save data
+customerRoutes.route("/upload").post(tokenVerification, upload.single('csvFile'), async (req, res) => {
+    const { dbname } = req.headers;
+
+    const CustomerModel = customerModel(dbname);
+
+    const customersDataFromDB = await CustomerModel.find();
+
+    // Compare existing data with new data. If not found then save
+    const customersDataFromFile = await csvtojson.fieldDelimiter(',').getJsonFromCsv("./public/Customers.csv")
+        .filter(filters =>
+            // some method works like includes but on values not reference
+            !customersDataFromDB.some(somes => somes.AcNo == filters.AcNo)
+        );
+
+    // Add custome object id (_id) field
+    const customersData = customersDataFromFile
+        .map((customers) => {
+            const id = new mongoose.Types.ObjectId(`ac${customers.AcNo}`)
+            return { ...customers, _id: id }
+        });
+
+
+    // Save/insert filterd data to database
+    CustomerModel.insertMany(customersData)
+        .then(() => {
+            res.send({
+                code: 201,
+                message: customersData?.length == 0
+                    ? "Everythig is up to date."
+                    : `${customersData?.length} Customers uploaded successfully.`
+            });
+        })
+        .catch(err => {
+            res.send({
+                code: 300,
+                message: `Error: ${err}`
+            });
+        })
+});
+
+// API to send Bulk Customers.xlsx file to client
+customerRoutes.route("/download").post(tokenVerification, async (req, res) => {
+    res.download("./public/sample/Bulk Customers.xlsx")
 });
 
 // HTTP request put method to update
