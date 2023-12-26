@@ -3,7 +3,7 @@ const express = require("express");
 const csvtojson = require("convert-csv-to-json");
 const multer = require('multer');
 const mongoDBConnection = require("../connection/mongoDbConnection");
-
+const fs = require("fs");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -160,6 +160,11 @@ transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFil
             : transactionDataFromFile.PlanType === "Hathway Bouquet"
                 ? (sdhdCount - 1 % 100) % 25
                 : sdhdCount;
+
+        fs.unlink("./public/Transactions.csv", (err) => {
+            if (err) throw err;
+            console.log('./public/Transactions.csv was deleted');
+        });
 
         // Returning calculate data as object
         return {
