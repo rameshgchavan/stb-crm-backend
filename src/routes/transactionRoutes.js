@@ -3,7 +3,7 @@ const express = require("express");
 const csvtojson = require("convert-csv-to-json");
 const multer = require('multer');
 const mongoDBConnection = require("../connection/mongoDbConnection");
-const fs = require("fs");
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -85,6 +85,7 @@ transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFil
     };
 
     const { dbname, yearmonth: yearMonth } = req.headers;
+    const { fileData } = req.body;
 
     const CustomerModel = customerModel(dbname);
     const PlanModel = planModel(dbname);
@@ -101,10 +102,13 @@ transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFil
 
 
     // Mapping for calculate data in transactionsDataFromFile
-    const transactionsDataFromFile = (
-        // Getting json data from csv file
-        await csvtojson.fieldDelimiter(',').getJsonFromCsv("./public/Transactions.csv")
-    ).map((transactionDataFromFile) => {
+    // const transactionsDataFromFile = (
+    //     // Getting json data from csv file
+    //     await csvtojson.fieldDelimiter(',').getJsonFromCsv("./public/Transactions.csv")
+    // )
+
+    // Mapping for calculate data in fileData
+    const transactionsDataFromFile = fileData.map((transactionDataFromFile) => {
         // Getting expiry date
         const ExpiryDate = transactionDataFromFile.Source === "HCAUTO"
             ? DateTime.fromJSDate(new Date(transactionDataFromFile.TransactionDateTime)).plus({ days: 30 }).toISODate()
@@ -160,11 +164,6 @@ transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFil
             : transactionDataFromFile.PlanType === "Hathway Bouquet"
                 ? (sdhdCount - 1 % 100) % 25
                 : sdhdCount;
-
-        fs.unlink("./public/Transactions.csv", (err) => {
-            if (err) throw err;
-            console.log('./public/Transactions.csv was deleted');
-        });
 
         // Returning calculate data as object
         return {

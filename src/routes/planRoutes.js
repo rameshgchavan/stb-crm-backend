@@ -83,17 +83,18 @@ planRoutes.route("/update").put(tokenVerification, (req, res) => {
 // API to convert csv file to json and save data
 planRoutes.route("/upload").post(tokenVerification, upload.single('csvFile'), async (req, res) => {
     const { dbname } = req.headers;
+    const { fileData } = req.body;
 
     const PlanModel = planModel(dbname);
 
     const plansDataFromDB = await PlanModel.find();
 
     // Compare existing data with new data. If not found then save
-    const plansDataFromFile = await csvtojson.fieldDelimiter(',').getJsonFromCsv("./public/Plans.csv")
-        .filter(filters =>
-            // some method works like includes but on values not reference
-            !plansDataFromDB.some(somes => somes.PlanName == filters.PlanName)
-        );
+    // const plansDataFromFile = await csvtojson.fieldDelimiter(',').getJsonFromCsv("./public/Plans.csv")
+    const plansDataFromFile = fileData.filter(filters =>
+        // some method works like includes but on values not reference
+        !plansDataFromDB.some(somes => somes.PlanName == filters.PlanName)
+    );
 
     // Add custome MRP field
     const plansData = plansDataFromFile

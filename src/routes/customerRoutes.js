@@ -62,17 +62,18 @@ customerRoutes.route("/save").post(tokenVerification, async (req, res) => {
 // API to convert csv file to json and save data
 customerRoutes.route("/upload").post(tokenVerification, upload.single('csvFile'), async (req, res) => {
     const { dbname } = req.headers;
+    const { fileData } = req.body;
 
     const CustomerModel = customerModel(dbname);
 
     const customersDataFromDB = await CustomerModel.find();
 
     // Compare existing data with new data. If not found then save
-    const customersDataFromFile = await csvtojson.fieldDelimiter(',').getJsonFromCsv("./public/Customers.csv")
-        .filter(filters =>
-            // some method works like includes but on values not reference
-            !customersDataFromDB.some(somes => somes.AcNo == filters.AcNo)
-        );
+    // const customersDataFromFile = await csvtojson.fieldDelimiter(',').getJsonFromCsv("./public/Customers.csv")
+    const customersDataFromFile = fileData.filter(filters =>
+        // some method works like includes but on values not reference
+        !customersDataFromDB.some(somes => somes.AcNo == filters.AcNo)
+    );
 
     // Add custome object id (_id) field
     const customersData = customersDataFromFile
