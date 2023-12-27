@@ -14,7 +14,7 @@ const app = express();
 
 // Use middlewares and routes in express
 // app.use(cors());
-app.use(express.json());
+app.use(express.json({limit: '200mb'}));
 app.use("/users", userRoutes);
 app.use("/customers", customerRoutes);
 app.use("/transactions", transactionRoutes);
