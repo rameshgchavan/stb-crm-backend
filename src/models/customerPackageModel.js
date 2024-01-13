@@ -1,6 +1,6 @@
 // Import mongoose
-const customerPackageSchema = require("../schemas/customerPackageScheme");
-const mongoDBConnection = require("../connection/mongoDbConnection");
+const customerPackageSchema = require("../schemas/customerPackageSchema");
+const mongoDBConnection = require("../dbConnection/mongoDbConnection");
 
 
 const customerPackageModel = (dbName, collectionName) => {

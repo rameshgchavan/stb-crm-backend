@@ -1,6 +1,6 @@
 // Import mongoose
 const planSchema = require("../schemas/planSchema");
-const mongoDBConnection = require("../connection/mongoDbConnection");
+const mongoDBConnection = require("../dbConnection/mongoDbConnection");
 
 const planModel = (dbName) => {
     const connection = mongoDBConnection.useDb(dbName, { useCache: true });

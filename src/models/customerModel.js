@@ -1,6 +1,6 @@
 // Import mongoose
 const customerSchema = require("../schemas/customerSchema");
-const mongoDBConnection = require("../connection/mongoDbConnection");
+const mongoDBConnection = require("../dbConnection/mongoDbConnection");
 
 const customerModel = (dbName) => {
     const connection = mongoDBConnection.useDb(dbName, { useCache: true });
