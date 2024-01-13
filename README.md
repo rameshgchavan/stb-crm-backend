@@ -87,7 +87,7 @@ In this file I have made connection with MongoDB database using mongoose.
 - #### /`customerSchema.js`
 This mongoose schema contains a Customer related data types and keys
 
-- #### /`transactionScheme.js`
+- #### /`transactionSchema.js`
 This mongoose schema contains a Transaction related data types and keys
 
 - #### /`userSchema.js`
@@ -98,7 +98,7 @@ This mongoose schema contains a User related data types and keys
      - In this model I have imorted Customer schema and send it with collection name to MonogDB
      - and exorted as model
 
-- #### /`transactionModel.js`
+- #### /`transactionsModel.js`
      - In this model I have imorted Transaction schema and send it with collection name to MonogDB
      - and exorted as model
 
