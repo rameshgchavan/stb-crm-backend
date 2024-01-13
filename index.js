@@ -4,10 +4,10 @@ const dotEnv = require("dotenv");
 // const cors = require("cors");
 
 // Import Routes
-const userRoutes = require("./src/routes/userRoutes");
-const customerRoutes = require("./src/routes/customerRoutes");
-const transactionRoutes = require("./src/routes/transactionRoutes");
-const planRoutes = require("./src/routes/planRoutes")
+const userRoutes = require("./src/apiRoutes/userRoutes");
+const customerRoutes = require("./src/apiRoutes/customerRoutes");
+const transactionRoutes = require("./src/apiRoutes/transactionRoutes");
+const planRoutes = require("./src/apiRoutes/planRoutes")
 
 // Create object of express
 const app = express();
