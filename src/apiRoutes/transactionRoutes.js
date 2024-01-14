@@ -56,6 +56,27 @@ transactionRoutes.route("/").post(tokenVerification, async (req, res) => {
     }
 });
 
+// API to get package history of customer by a/c number
+transactionRoutes.route("/packages").post(tokenVerification, async (req, res) => {
+    const { dbName, acNo } = req.body;
+
+    const packagesBills = (await trasactionsModel(dbName, "packages-bills")
+        .aggregate([ // match by acNo
+            { $match: { "data.AcNo": acNo } }
+        ]))
+        .map(package => package.data. //mapping matched customer's data
+            // filtering package that having acNo
+            filter(dataPackage => dataPackage.AcNo == acNo)
+        )
+        // filtered data is array of array of objects 
+        // so spreading nested arrays in one array
+        .reduce((pre, cur) => [...pre, ...cur], []) 
+        // then sorting by date decending order
+        .sort((a, b) => new Date(b.transactionDate) - new Date(a.transactionDate))
+
+    res.send(packagesBills);
+});
+
 // transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFile'), async (req, res) => {
 
 // API to create collection for monthly transaction
