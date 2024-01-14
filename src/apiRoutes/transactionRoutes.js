@@ -1,20 +1,20 @@
 // Import express
 const express = require("express");
 const csvtojson = require("convert-csv-to-json");
-const multer = require('multer');
+// const multer = require('multer');
 const mongoDBConnection = require("../dbConnection/mongoDbConnection");
 
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        return cb(null, "./public")
-    },
-    filename: function (req, file, cb) {
-        return cb(null, "Transactions.csv")
-    }
-});
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         return cb(null, "./public")
+//     },
+//     filename: function (req, file, cb) {
+//         return cb(null, "Transactions.csv")
+//     }
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
 // Import tokenVerification Model
 const tokenVerification = require("../functions/tokenVerificationModel");
@@ -24,7 +24,6 @@ const customerModel = require("../models/customerModel");
 const { default: mongoose } = require("mongoose");
 const { DateTime } = require("luxon");
 const planModel = require("../models/planModel");
-const customerPackageModel = require("../models/customerPackageModel");
 const trasactionsModel = require("../models/transactionsModel");
 
 // Create Router object
@@ -57,8 +56,10 @@ transactionRoutes.route("/").post(tokenVerification, async (req, res) => {
     }
 });
 
-// API to convert csv file to json and create collection for monthly transaction
-transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFile'), async (req, res) => {
+// transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFile'), async (req, res) => {
+
+// API to create collection for monthly transaction
+transactionRoutes.route("/upload").post(tokenVerification, async (req, res) => {
     // If customer not found
     const naCustomer = {
         IsFree: false,
@@ -426,36 +427,6 @@ transactionRoutes.route("/upload").post(tokenVerification, upload.single('csvFil
 transactionRoutes.route("/download").post(tokenVerification, async (req, res) => {
     res.download("./public/sample/Bulk Transactions.xlsx")
 });
-
-// HTTP request post method to get recharged stbs A/c No. 
-transactionRoutes.route("/rcstbacno").post(tokenVerification, async (req, res) => {
-    const monthsList = [
-        "Jan", "Feb", "Mar", "Apr",
-        "May", "Jun", "Jul", "Aug",
-        "Sep", "Oct", "Nov", "Dec"
-    ];
-
-    let rcSTBsCount = [];
-
-    const { dbName, ofYear } = req.body;
-
-    for (let i = 0; i < monthsList.length; i++) {
-        const collectionName = `${monthsList[i]}-${ofYear}`;
-        const CustomerPackageModel = customerPackageModel(dbName, collectionName);
-
-        const customers = (await CustomerPackageModel.find({}))[0]?.customers;
-
-        rcSTBsCount.push(
-            {
-                totalRCSTBs: customers?.length || 0,
-                freeSTBs: customers?.filter(customer => customer.IsFree == true)?.length || 0
-            }
-        );
-    }
-
-    // console.log(rcSTBsCount);
-    res.send(rcSTBsCount);
-})
 
 // Export Router
 module.exports = transactionRoutes;
